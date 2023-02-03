@@ -2,13 +2,17 @@ plugins {
     id 'com.android.application'
 }
 
+def apikeyPropertiesFile = rootProject.file("apikey.properties")
+def apikeyProperties = new Properties()
+apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+
 android {
     namespace 'com.example.weather'
     compileSdk 33
 
     defaultConfig {
         applicationId "com.example.weather"
-        minSdk 32
+        minSdk 31
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -26,6 +30,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    defaultConfig {
+        buildConfigField("String", "OPEN_WEATHER_API_KEY", apikeyProperties['OPEN_WEATHER_API_KEY'])
+    }
 }
 
 
@@ -36,6 +44,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.google.android.material:material'
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
 }
 
 
